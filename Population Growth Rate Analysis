@@ -1,0 +1,55 @@
+SELECT * FROM dbo.Data1$
+SELECT * FROM dbo.['Extract 1$']
+
+-- number of rows into our dataset
+
+SELECT Count(*) FROM Data1$
+SELECT Count(*) FROM ['Extract 1$']
+SELECT Count(*) FROM ['Pivot Table 2$']
+SELECT Count(*) FROM Sheet1$
+SELECT Count(*) FROM Sheet2$
+SELECT Count(*) FROM Sheet3$
+SELECT Count(*) FROM Sheet5$
+SELECT Count(*) FROM america_health_rankings$
+
+
+-- data for jharkand and bihar
+
+SELECT * FROM Data1$ WHERE State in ('Jharkand', 'Bihar')
+
+-- population of india
+
+SELECT SUM(population) FROM Sheet1$
+
+-- Average Growth of India
+
+SELECT AVG(Growth) *100 as Avg_Growth FROM Data1$
+
+-- Average Growth of the State
+
+SELECT State, AVG(Growth) *100 as Avg_Growth FROM Data1$ WHERE State is not null
+GROUP BY [State ] 
+
+-- Average Sex Ratio
+
+SELECT State,round(AVG(sex_ratio),0) as Avg_Growth FROM Data1$ WHERE State is not null
+GROUP BY [State ] 
+
+-- AVG Literacy Rate
+
+SELECT State,round(AVG(Literacy),0) as Avg_Growth FROM Data1$ WHERE State is not null
+GROUP BY [State ] 
+
+
+--- Literacy Rate greater than 90
+SELECT State,round(AVG(Literacy),0) as Avg_Growth FROM Data1$ 
+GROUP BY [State ], Literacy HAVING Literacy > 90
+
+
+-- Top 3 state showing highest growth ratio
+SELECT TOP 3 State, AVG(Growth) *100 as Avg_Growth FROM Data1$ WHERE State is not null
+GROUP BY [State ]  ORDER BY Avg_Growth DESC
+
+-- Top 3 state showing lowest growth ratio
+SELECT TOP 3 State, AVG(Growth) *100 as Avg_Growth FROM Data1$ WHERE Growth is not null
+GROUP BY [State ]  ORDER BY Avg_Growth 
